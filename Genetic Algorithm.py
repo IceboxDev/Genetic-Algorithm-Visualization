@@ -1,4 +1,4 @@
-#Genetic Algorithm
+# Genetic Algorithm
 
 from random import randint
 from random import choice
@@ -15,13 +15,13 @@ import pygame
 
 pygame.init()
 
-#Display
+# Display
 DISPLAYSURF = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 DISPLAYINFO = pygame.display.Info()
 DISPLAY_W   = DISPLAYINFO.current_w
 DISPLAY_H   = DISPLAYINFO.current_h
 
-#Text
+# Text
 FONT        = pygame.font.SysFont("CourierNew", 16)
 BOLD        = pygame.font.SysFont("CourierNew", 64, bold    = True)
 ITALIC      = pygame.font.SysFont("CourierNew", 32, italic  = False)
@@ -30,14 +30,14 @@ BLACK       = (0  , 0   , 0  )
 RED         = (255, 0   , 0  )
 LBLUE       = (0  , 191 , 255)
 
-#Files
+# Files
 pygame.mixer.music.load("phenotype.mp3")
 PHEN_RED    = pygame.image.load("Red.png")
 PHEN_GREEN  = pygame.image.load("Green.png")
 PHEN_LBLUE  = pygame.image.load("LBlue.png")
 CODE        = "code.txt"
 
-#Settings
+# Settings
 ACTIVE      = True
 DRAWN       = False
 CODEMODE    = False
@@ -45,21 +45,21 @@ CLOCK       = pygame.time.Clock()
 GENERATION  = 1
 GLOBAL_FIT  = float("inf")
 
-#Hyperparameters
+# Hyperparameters
 POPULATION_SIZE = 100
 GENERATIONS     = 100
 MUTATION_CONST  = 0.01
 SCOPE           = (2, 100)
 
-#Mutations
-mutations_bases = [["%s * 2"                ,"%s * 3"               ],
-                   ["%s + choice([1, -1])"  ,"%s + choice([2, -2])" ],
-                   ["%s * randint(2,100)"   ,"%s"                   ],
-                   ["%s // 2"               ,"%s + randint(1,100)*2"],
-                   ["int(str(%s) + choice(['1', '3', '7', '9']))"    ,\
-                    "int(str(%s) + str(randint(0,9)))"              ],]
+# Mutations
+mutations_bases = [["%s * 2"                , "%s * 3"               ],
+                   ["%s + choice([1, -1])"  , "%s + choice([2, -2])" ],
+                   ["%s * randint(2,100)"   , "%s"                   ],
+                   ["%s // 2"               , "%s + randint(1,100)*2"],
+                   ["int(str(%s) + choice(['1', '3', '7', '9']))"     ,
+                    "int(str(%s) + str(randint(0,9)))"               ], ]
 
-#Phenotype class
+# Phenotype class
 class Phenotype:
 
     #Initialization
@@ -76,15 +76,15 @@ class Phenotype:
 
         self.fit = self.fitness()
 
-    #Overriding "less-than" operator    
+    # Overriding "less-than" operator
     def __lt__(self, other):
         return self.fit < other.fit
 
-    #Overriding "reverse-add" operator
+    # Overriding "reverse-add" operator
     def __radd__(self, other):
         return self.fit + other
 
-    #Cz calculation using logarithms
+    # Cz calculation using logarithms
     def log3(self):
         max_exp = ceil(log(self.Cz, 3))
         minDiff = (float("inf"), None, None)
